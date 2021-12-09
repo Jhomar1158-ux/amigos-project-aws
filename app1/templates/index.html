@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Amigos</title>
+</head>
+<style>
+    .container-welcome{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .container-1{
+        width: 400px;
+    }
+    .container-2{
+        width: 400px;
+    }
+</style>
+
+<body>
+    <div class="container-welcome">
+        <div class="container-1">
+            <h1 class='display-4 ml-3'><small><u>Register</u></small></h1>
+            {% for message in messages %}
+                {% if 'registered' in message.extra_tags %}
+                        <div class="alert alert-success" role="alert">
+                                {{message}}
+                        </div>
+                {% endif %}
+
+            {% endfor %}
+            <form action = '/registro' method = 'POST'>
+                {% csrf_token %}
+                {% for message in messages %}
+                        {% if 'fn_error' in message.extra_tags %}
+                        <div class="alert alert-danger" role="alert">
+                                {{message}}
+                        </div>
+                        {% endif %}
+                    
+                {% endfor %}
+                    <div class=" ml-5  form-group w-25">
+                            <label for="formGroupExampleInput">Name</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" name = "name">
+                    </div>
+
+                    <div class="ml-5  form-group w-25">
+                            <label for="formGroupExampleInput">Alias</label>
+                            {% for message in messages %}
+                                    {% if 'ln_error' in message.extra_tags %}
+                                    <div class="alert alert-danger" role="alert">
+                                            {{message}}
+                                    </div>
+                                    {% endif %}
+                                
+                            {% endfor %}
+                            <input type="text" class="form-control" id="formGroupExampleInput" name = 'alias'>
+                    </div>
+
+                    <div class="ml-5  form-group w-25">
+                            <label for="formGroupExampleInput">Email</label>
+                {% for message in messages %}
+                            {% if 'email_error' in message.extra_tags %}
+                            <div class="alert alert-danger" role="alert">
+                                    {{message}}
+                            </div>
+                            {% endif %}
+                        
+                {% endfor %}
+                            <input type="text" class="form-control" id="formGroupExampleInput" name = 'email'>
+                    </div>
+
+                    <div class="ml-5  form-group w-25">
+                            <label for="formGroupExampleInput">Password</label>
+                            {% for message in messages %}
+                                        {% if 'pw_error' in message.extra_tags %}
+                                        <div class="alert alert-danger" role="alert">
+                                                {{message}}
+                                        </div>
+                                        {% endif %}
+                                    
+                            {% endfor %}
+                            <input type="password" class="form-control" id="formGroupExampleInput" name = 'password'>
+                    </div>
+
+                    <div class="ml-5 form-group w-25">
+                            <label for="formGroupExampleInput">Confirm Password</label>
+                            <input type="password" class="form-control" id="formGroupExampleInput" name = 'confirm_password'>
+                    </div>
+                    <div class="ml-5 form-group w-25">
+                        <label for="formGroupExampleInput">Date of Birth</label>
+                        <input type="date" class="form-control" id="formGroupExampleInput" name = 'date_of_birthday'>
+                    </div>
+                    <button type="submit" class="ml-5 btn btn-primary">Register</button>
+            </form>
+        </div>
+    <!-- ===========================================================  -->
+        <div class="container-2">
+            <h1 class='display-4 ml-3'><small><u>Login</u></small></h1>
+            <form action='/login' method='POST'>
+                        {% csrf_token %}
+                        {% for message in messages %}
+                                {% if 'log_error' in message.extra_tags %}
+                                        <div class="alert alert-danger" role="alert">
+                                                {{message}}
+                                        </div>
+                                {% endif %}
+                        {% endfor %}
+                        <div class="ml-5  form-group w-25">
+                                        <label for="formGroupExampleInput">Email</label>
+                        {% for message in messages %}
+                                {% if 'mal_dato_login_e' in message.extra_tags %}
+                                        <div class="alert alert-danger" role="alert">
+                                                {{message}}
+                                        </div>
+                                {% endif %}
+                        {% endfor %}
+                                        <input type="text" class="form-control" id="formGroupExampleInput" name = 'email'>
+                        </div>
+
+                        <div class="ml-5  form-group w-25">
+                                        <label for="formGroupExampleInput">Password</label>
+                        {% for message in messages %}
+                                {% if 'mal_login_pass_dato' in message.extra_tags %}
+                                        <div class="alert alert-danger" role="alert">
+                                                {{message}}
+                                        </div>
+                                {% endif %}
+                            
+                        {% endfor %}
+                                        <input type="password" class="form-control" id="formGroupExampleInput" name = 'password'>
+                        </div>
+
+                        <button type="submit" class="ml-5 btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
